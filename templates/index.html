@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skin Disease Classification</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@1,700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <span class="navbar-brand" id="titlehead">Skin Disease Classification</span>
+    </nav>
+
+    <div class="subheading" id="subheading">"Identify Skin Conditions Instantly and Accurately"</div>
+    <div class="description">
+        <h3>ABOUT THIS WEBSITE</h3>
+        <div id="big-box">
+            This website leverages the power of Deep Learning by using Convolutional Neural Networks (CNN's) and hence classifies a given image into either
+            of 8 skin diseases...
+        </div>
+    </div>
+
+    <div class="content">
+        <form action="/" method="post" enctype="multipart/form-data">
+            <div id="drop-area">
+                <p>Paste your image here or click to upload</p>
+                <input type="file" id="file-input" name="file" accept="image/*" required style="display: none;">
+            </div>
+            <button type="submit">DETECT</button>
+        </form>
+
+        <img id="preview" src="" alt="" style="display: none;">
+
+        {% if prediction %}
+        <div class="result" id="result-section">
+            <h2>Prediction: {{ prediction }}</h2>
+
+            <div>
+                <img src="data:image/png;base64,{{ image_data }}" alt="Uploaded Image">
+            </div>
+
+            <div id="extra-info">
+                <p><strong>Description:</strong> {{ description }}</p>
+
+                <p><strong>Suggested Medicines:</strong></p>
+                <ul>
+                    {% for med in medicines %}
+                        <li>{{ med }}</li>
+                    {% endfor %}
+                </ul>
+
+                <p><strong>Health Tips:</strong></p>
+                <ul>
+                    {% for tip in tips %}
+                        <li>{{ tip }}</li>
+                    {% endfor %}
+                </ul>
+
+                <p><strong>Home Treatments:</strong></p>
+                <ul>
+                    {% for treatment in home_treatments %}
+                        <li>{{ treatment }}</li>
+                    {% endfor %}
+                </ul>
+
+                <p><strong>Diagnosis Tests:</strong></p>
+                <ul>
+                    {% for test in diagnosis_tests %}
+                        <li>{{ test }}</li>
+                    {% endfor %}
+                </ul>
+
+                <a href="https://www.google.com/maps/search/skin-doctor-near-me/" target="_blank" class="clinic-link">Look for Clinic</a>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+    <footer class="tech">
+        <p> TECHNOLOGIES USED:</p>
+        <div class="tech_stack">
+            <div>Python</div>
+            <div>TensorFlow</div>
+            <div>Flask</div>
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='index.js') }}"></script>
+</body>
+</html>
